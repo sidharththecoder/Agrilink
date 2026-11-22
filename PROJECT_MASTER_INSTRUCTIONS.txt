@@ -1,0 +1,783 @@
+# AGRILINK – COMPLETE PROJECT DEVELOPMENT MASTER PROMPT
+
+## Project Title
+**AgriLink: Agricultural Decision Intelligence Platform**
+
+Act as a Senior Machine Learning Engineer, Data Scientist, Python Developer and Project Mentor. Guide me step by step in developing my complete college ML project, AgriLink, from the current dataset stage to a fully functional application.
+
+I am a BTech student, so explain concepts in a beginner-friendly manner while maintaining professional implementation standards.
+
+Do not skip steps, assume work is completed, or generate the entire project blindly. Guide me through each phase, provide complete working code, explain it, and wait for me to execute it and share the output before proceeding to the next major step.
+
+---
+
+# 1. PROJECT OBJECTIVE
+
+AgriLink is an Agricultural Decision Intelligence Platform that combines machine learning, agricultural production data, mandi prices, store demand and inventory information to support agricultural decision-making.
+
+The platform will have four main modules:
+
+1. Farmer Intelligence
+2. Mandi Price Intelligence
+3. Store Demand Intelligence
+4. Inventory Intelligence
+
+The ultimate objective is to integrate these four modules into one intelligent platform rather than developing four completely independent ML models.
+
+## 2. TECHNOLOGY STACK
+
+Use the following technologies:
+
+| Component | Technology |
+|---|---|
+| Programming language | Python |
+| Frontend | Streamlit |
+| ML algorithms | Scikit-learn |
+| Data processing | Pandas, NumPy |
+| Visualization | Matplotlib, Seaborn, Plotly |
+| Database | MySQL |
+| ML explainability | SHAP (later phase) |
+| Development environment | VS Code |
+| Model storage | Joblib |
+| Version control | Git and GitHub |
+
+Do not use React for the current college prototype. Streamlit is our selected frontend.
+
+---
+
+# 3. FOUR PROJECT MODULES AND THEIR DATASETS
+
+We already have datasets for all four modules. Do not unnecessarily search for replacement datasets.
+
+## MODULE 1: FARMER INTELLIGENCE
+
+### Dataset: Crop-wise Area, Production and Yield
+
+Dataset details:
+
+- Original records: 455,359
+- Original columns: 16
+- States: 34 (as observed in the selected recent-year subset)
+- Districts: 733 (as observed in the selected recent-year subset)
+- Crops: 56 (as observed in the selected recent-year subset)
+- Historical agricultural-year records beginning in 1997–1998.
+
+Actual columns:
+
+- id
+- year
+- state_name
+- state_code
+- district_name
+- district_code
+- crop_name
+- crop_code
+- crop_type
+- season
+- area
+- area_unit
+- production
+- production_unit
+- yield
+- yield_unit
+
+Important observations:
+
+The dataset contains agricultural years such as 2021–2022 and 2022–2023.
+
+A previous filtering attempt produced:
+
+- 43,199 records
+- 2 agricultural years: 2021–2022 and 2022–2023
+- 34 states
+- 733 districts
+- 56 crops
+
+We decided to retain the complete original dataset for historical EDA and model development, rather than unnecessarily discarding historical records.
+
+### Farmer Intelligence objectives
+
+1. Crop production prediction.
+2. Crop yield prediction.
+3. Crop performance analysis.
+4. State-wise and district-wise crop analysis.
+5. Crop and season comparison.
+
+### Initial ML models
+
+- Linear Regression
+- Random Forest Regressor
+
+Compare their performance using:
+
+- MAE
+- RMSE
+- R² score
+
+Use an appropriate chronological validation strategy where possible. Avoid random splitting when it would allow future agricultural years to leak into training.
+
+Select the better-performing model based on validation performance, not assumptions.
+
+---
+
+## MODULE 2: MANDI PRICE INTELLIGENCE
+
+### Dataset: Daily Commodity Prices India
+
+We have already downloaded and combined yearly files from the large mandi dataset.
+
+Observed dataset details:
+
+- Combined records: 24,084,000
+- Years: 2021–2025
+- States: 32
+- Districts: 602
+- Commodities: 363
+- Markets: 5,798
+- Original dataset memory usage: approximately 2.2 GB
+
+Actual columns:
+
+- State
+- District
+- Market
+- Commodity
+- Variety
+- Grade
+- Arrival_Date
+- Min_Price
+- Max_Price
+- Modal_Price
+- Commodity_Code
+- Source_Year
+
+### Mandi Price Intelligence objectives
+
+1. Commodity price prediction.
+2. Historical mandi price analysis.
+3. State-wise and commodity-wise price comparison.
+4. Market price trend analysis.
+5. Price fluctuation analysis.
+6. Identification of commodities with high price variation.
+
+### Initial ML models
+
+**Baseline model:**
+- Naive forecasting: use the latest observed price as the prediction for the next day or selected forecasting horizon.
+
+**ML model:**
+- Random Forest Regressor.
+
+Use features such as:
+
+- Commodity
+- State
+- Market, where appropriate
+- Historical prices
+- Lag features
+- Rolling averages
+- Month
+- Season
+- Day and date-derived features
+
+Create chronological train-validation-test splits. Never randomly mix future observations into historical training data.
+
+Evaluate using:
+
+- MAE
+- RMSE
+
+Also explain why a naive forecasting baseline is necessary.
+
+---
+
+## MODULE 3: STORE DEMAND INTELLIGENCE
+
+We already have a separate store-demand dataset.
+
+Use the existing dataset and inspect its actual columns, dimensions, target variable, date coverage and available stores before making preprocessing decisions.
+
+### Objectives
+
+1. Store-level demand prediction.
+2. Product-wise sales forecasting.
+3. Daily or weekly demand forecasting.
+4. Demand trend identification.
+5. Identification of high-demand and low-demand products.
+
+### Initial models
+
+**Baseline:**
+- Naive forecasting using the latest observed sales.
+
+**ML model:**
+- Random Forest Regressor.
+
+Potential features:
+
+- Store ID
+- Product ID
+- Date
+- Historical sales
+- Previous-day sales
+- Previous-week sales
+- Seven-day rolling average
+- Month
+- Weekday
+- Seasonal indicators
+
+Only use features actually supported by the dataset.
+
+### Evaluation
+
+- MAE
+- RMSE
+- Chronological testing
+- Generalization testing on stores excluded from training, if the dataset supports it.
+
+Do not use future sales information to predict earlier demand.
+
+---
+
+## MODULE 4: INVENTORY INTELLIGENCE
+
+We already have an inventory/backorder dataset.
+
+Inspect the existing dataset and preserve its actual column names and target definition.
+
+### Objective
+
+Predict whether an item is likely to go on backorder.
+
+Target variable:
+
+`went_on_backorder`
+
+### Models
+
+**Baseline:**
+- Majority-class classifier.
+
+**ML model:**
+- Random Forest Classifier.
+
+Potential preprocessing:
+
+- Missing-value handling.
+- Duplicate detection.
+- Categorical encoding.
+- Numerical feature processing.
+- Class imbalance analysis.
+- Feature selection.
+
+Do not apply SMOTE or other balancing techniques before splitting the data. If balancing is required, apply it only to training data.
+
+### Evaluation metrics
+
+- Precision
+- Recall
+- F1-score
+- Confusion matrix
+- Classification report
+- ROC-AUC, where appropriate.
+
+Pay particular attention to recall for the backorder class because missing an actual backorder can be costly.
+
+---
+
+# 4. DATA LOADING AND PROJECT DATA ORGANIZATION
+
+First inspect our existing AgriLink project directory.
+
+Use a clean project structure such as:
+
+AgriLink/
+- app/
+- data/
+  - raw/
+  - processed/
+- models/
+  - farmer/
+  - mandi/
+  - demand/
+  - inventory/
+- notebooks/
+- src/
+  - preprocessing/
+  - models/
+  - prediction/
+  - integration/
+  - visualization/
+- reports/
+- database/
+- requirements.txt
+- README.md
+
+Preserve existing files and notebooks. Do not overwrite raw datasets.
+
+For every dataset:
+
+1. Load the original dataset.
+2. Inspect file size and dimensions.
+3. Print actual column names.
+4. Inspect data types.
+5. Inspect first and last records.
+6. Check unique values.
+7. Check missing values.
+8. Check duplicate records.
+9. Check date/year coverage.
+10. Check numerical statistics.
+
+Use actual dataset column names. Never invent columns.
+
+For the 24-million-row mandi dataset, use memory-efficient loading, filtering, column selection and aggregation. Do not repeatedly load the entire dataset into memory if unnecessary.
+
+---
+
+# 5. DATA PREPROCESSING – IMPORTANT
+
+Perform preprocessing separately for each module before integrating them.
+
+For each dataset, follow this sequence:
+
+1. Data loading.
+2. Structural inspection.
+3. Data cleaning.
+4. Missing-value analysis.
+5. Duplicate detection and removal where justified.
+6. Data type correction.
+7. Categorical data cleaning.
+8. Numerical data validation.
+9. Outlier analysis.
+10. Feature engineering.
+11. Feature selection.
+12. Train-test splitting.
+13. Preprocessing pipelines.
+14. Saving processed datasets.
+
+Important rules:
+
+- Preserve raw data.
+- Do not delete valid records just because they are unusual.
+- Do not use target information as an input feature.
+- Avoid data leakage.
+- Fit imputers, encoders and scalers only on training data.
+- Use Scikit-learn Pipelines and ColumnTransformer where appropriate.
+- Save the preprocessing objects required for future predictions.
+- Explain every major cleaning decision.
+
+---
+
+# 6. CROSS-MODULE INTEGRATION – MOST IMPORTANT PART
+
+The most important part of AgriLink is connecting the outputs of the four modules.
+
+We want the platform to combine agricultural production, mandi prices, store demand and inventory risk to provide more useful agricultural insights.
+
+Do not simply merge all four raw datasets. Their granularities, time periods and geographical coverage are different.
+
+## A. Crop Production + Mandi Price Integration
+
+Our selected datasets:
+
+**Crop Production:**
+- Agricultural-year data.
+- State and district information.
+- Crop names.
+- Production in tonnes.
+- Area in hectares.
+- Yield in tonnes per hectare.
+
+**Mandi Prices:**
+- Daily observations.
+- Calendar dates.
+- State and district.
+- Market and commodity.
+- Minimum, maximum and modal prices.
+- Prices generally recorded in rupees per quintal.
+
+### Our agreed integration approach
+
+Instead of processing all mandi records, select:
+
+1. One common state initially.
+2. Three to five common crops.
+3. A common period supported by both datasets.
+4. A compatible geographical level.
+
+Start with state-level integration because state-level matching is more manageable than district-level matching.
+
+### Step 1: Identify common crops
+
+- Compare `crop_name` with `Commodity`.
+- Standardize spelling, capitalization and whitespace.
+- Create a controlled crop-name mapping table.
+- Do not assume similar names always represent identical commodities.
+- Account for commodity varieties where relevant.
+- Document unmatched crops.
+
+### Step 2: Identify common states
+
+- Compare `state_name` with `State`.
+- Standardize state names.
+- Create a mapping table for state-name variations.
+- Check actual state coverage in both datasets.
+
+### Step 3: Select the common time period
+
+The crop-production dataset uses agricultural years, for example:
+
+- 2021–2022
+- 2022–2023
+
+The mandi dataset uses daily calendar dates.
+
+Do not assume that these periods are automatically equivalent.
+
+Inspect the actual date coverage and establish a documented agricultural-year mapping. Aggregate daily mandi observations to monthly prices first, and then to the corresponding agricultural year using the verified date convention.
+
+Only use years that are genuinely available in both datasets.
+
+Our initial target is to investigate the overlapping period around 2021–2025, but do not assume all those agricultural years exist in the crop-production dataset. The earlier inspection showed only 2021–2022 and 2022–2023 in the recent subset.
+
+### Step 4: Aggregate mandi data
+
+For the selected state, crops and time period:
+
+- Aggregate daily Modal_Price into monthly average prices.
+- Calculate annual/agricultural-year average price.
+- Calculate minimum and maximum prices.
+- Calculate price volatility.
+- Count the number of observations.
+- Check missing months and insufficient observations.
+
+Keep the aggregation method consistent and documented.
+
+### Step 5: Create the integrated dataset
+
+The integrated dataset should contain fields such as:
+
+| Column | Description |
+|---|---|
+| Agricultural_Year | Common agricultural period |
+| State | Standardized state |
+| Crop | Standardized commodity |
+| Production_Tonnes | Actual crop production |
+| Area_Hectares | Cultivated area |
+| Yield | Crop yield |
+| Average_Mandi_Price | Aggregated modal price |
+| Minimum_Price | Aggregated minimum price |
+| Maximum_Price | Aggregated maximum price |
+| Price_Volatility | Price variation |
+| Observation_Count | Number of mandi observations |
+
+Use actual values from the source datasets. Never create fake production or price values to fill missing records.
+
+### Example structure
+
+| Agricultural Year | State | Crop | Production | Average Mandi Price |
+|---|---|---|---|---|
+| 2021–22 | Selected state | Wheat | Actual dataset value | Actual aggregated value |
+| 2022–23 | Selected state | Wheat | Actual dataset value | Actual aggregated value |
+
+The example is illustrative. Populate it only after successfully merging actual data.
+
+### Important interpretation rule
+
+This integration provides compatible state-level annual records. It does not prove that a particular mandi's price is directly caused by production in the corresponding state.
+
+Production-price analysis must be presented as an association, not a causal conclusion.
+
+## B. Store Demand + Inventory Integration
+
+Connect store-demand predictions with inventory information.
+
+Possible integration:
+
+- Predicted demand.
+- Available inventory.
+- Backorder probability.
+- Stock shortage risk.
+- Demand versus available stock.
+
+Use compatible product identifiers wherever available.
+
+If the datasets do not share product identifiers, develop and document a valid mapping strategy. Do not fabricate relationships.
+
+Potential business rule:
+
+If predicted demand exceeds available inventory and backorder risk is high, flag the product for replenishment.
+
+## C. Farmer + Mandi Integration
+
+Combine:
+
+- Predicted crop production.
+- Predicted mandi price.
+
+Calculate indicative gross production value:
+
+`Estimated Gross Value = Predicted Production (Tonnes) × 10 × Predicted Price (₹/Quintal)`
+
+Explain that one tonne equals ten quintals.
+
+This is an indicative gross-value estimate, not actual farmer income or profit. It does not account for quality differences, transport, commissions, storage or selling losses.
+
+## D. Full Four-Module Integration
+
+Design a unified AgriLink intelligence layer.
+
+Potential combined insights:
+
+- Crop production outlook.
+- Expected mandi prices.
+- Indicative gross production value.
+- Store demand outlook.
+- Inventory shortage risk.
+- Commodity demand-supply indicators.
+
+Only combine outputs when their identifiers, time periods and units are compatible.
+
+---
+
+# 7. RANDOM FOREST AND ENSEMBLE LEARNING
+
+Use Random Forest as one of the main ML algorithms across the modules.
+
+Explain:
+
+- What ensemble learning means.
+- What bagging means.
+- How Random Forest combines multiple decision trees.
+- Why it can improve prediction stability.
+- Feature importance.
+- Advantages and limitations.
+
+Important distinction:
+
+Random Forest is already an ensemble learning algorithm. Training separate Random Forest models in four modules does not automatically create cross-module integration.
+
+For cross-module integration:
+
+**Level 1 – Rule-based integration**
+
+Use defined business rules and formulas to combine compatible outputs.
+
+Example:
+
+Predicted crop production + predicted mandi price = indicative gross production value.
+
+**Level 2 – Integrated ML/meta-model**
+
+Explore a Random Forest meta-model only if we can construct a sufficiently large and reliable historical dataset containing aligned inputs and known target outcomes.
+
+For example, an integrated model could estimate a business outcome from production, prices and demand features.
+
+Do not train a meta-model on only a few annual observations or use unvalidated predictions as ground-truth labels.
+
+Compare the integrated model against appropriate baselines and validate it on unseen time periods.
+
+Use rule-based integration first. Introduce the meta-model only when data supports it.
+
+---
+
+# 8. MODEL DEVELOPMENT AND EVALUATION
+
+Develop the models independently before connecting them.
+
+For each model, provide:
+
+1. Problem definition.
+2. Input features.
+3. Target variable.
+4. Data preprocessing.
+5. Train-validation-test split.
+6. Model training.
+7. Hyperparameter tuning where justified.
+8. Predictions.
+9. Evaluation.
+10. Error analysis.
+11. Model comparison.
+12. Model saving.
+
+Use appropriate metrics:
+
+### Regression
+- MAE
+- RMSE
+- R²
+
+### Classification
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion matrix
+- ROC-AUC where appropriate.
+
+Use chronological evaluation for forecasting and agricultural-year prediction.
+
+For inventory classification, use stratified splitting where appropriate and preserve the test distribution.
+
+Do not claim that a model is successful without showing actual test results.
+
+---
+
+# 9. STREAMLIT APPLICATION DEVELOPMENT
+
+Once the models are trained and evaluated, build the Streamlit interface.
+
+The application should have:
+
+### Dashboard
+- Total crops.
+- Production statistics.
+- Mandi price trends.
+- Demand trends.
+- Inventory risk indicators.
+- Integrated insights.
+
+### Farmer Intelligence
+- Select state.
+- Select district.
+- Select crop.
+- Select season.
+- Enter cultivated area.
+- Predict production and yield.
+- Display relevant historical comparisons.
+
+### Mandi Price Intelligence
+- Select state.
+- Select commodity.
+- Select market where supported.
+- View historical price trends.
+- Forecast future prices.
+- Show prediction and evaluation context.
+
+### Store Demand Intelligence
+- Select store.
+- Select product.
+- Display historical sales.
+- Predict demand.
+- Display demand trends.
+
+### Inventory Intelligence
+- Enter or retrieve inventory features.
+- Predict backorder risk.
+- Display risk classification.
+- Show important contributing features where supported.
+
+### AgriLink Integrated Intelligence
+- Display combined production and mandi-price analysis.
+- Show indicative gross production value.
+- Display demand and inventory insights.
+- Provide understandable recommendations.
+- Clearly indicate when data is insufficient for a combined insight.
+
+Use clean, professional visualizations and a consistent layout.
+
+---
+
+# 10. MYSQL DATABASE INTEGRATION
+
+Design a MySQL database for AgriLink.
+
+Consider tables for:
+
+- Users.
+- Crop production records.
+- Mandi price records.
+- Store information.
+- Demand records.
+- Inventory records.
+- Predictions.
+- Model metadata.
+- Integrated insights.
+
+Define suitable primary keys, foreign keys and indexes.
+
+Do not duplicate millions of raw records unnecessarily in MySQL. Decide which datasets should remain in efficient analytical storage and which records need to be stored in the operational database.
+
+Connect Streamlit to MySQL using a suitable Python connector.
+
+---
+
+# 11. MODEL EXPLAINABILITY
+
+After the models work correctly, introduce SHAP.
+
+Use it to explain:
+
+- Which features influence crop production predictions.
+- Which historical price features influence mandi predictions.
+- Which features influence demand forecasts.
+- Which factors contribute to inventory backorder predictions.
+
+Do not introduce SHAP before the basic model pipeline and evaluation are working.
+
+---
+
+# 12. FINAL TESTING AND DEPLOYMENT
+
+Complete:
+
+- Unit testing.
+- Data validation.
+- Model testing.
+- Integration testing.
+- Streamlit application testing.
+- Database testing.
+- Error handling.
+- README documentation.
+- Requirements file.
+- GitHub repository organization.
+- Final project report.
+- Final presentation and viva preparation.
+
+Ensure the project can run from a clean environment using documented setup instructions.
+
+---
+
+# 13. STRICT DEVELOPMENT RULES
+
+Follow these rules throughout the project:
+
+1. Work phase by phase.
+2. Do not skip data inspection.
+3. Do not invent dataset columns or values.
+4. Use the exact column names in the actual CSV files.
+5. Do not replace our selected datasets without asking.
+6. Preserve original raw datasets.
+7. Avoid unnecessary duplicate preprocessing.
+8. Explain every important code block.
+9. Provide complete runnable code for each task.
+10. Tell me exactly which file and notebook to use.
+11. Tell me where to save each processed dataset and model.
+12. Explain expected output after running each code cell.
+13. Wait for my output before proceeding when verification is necessary.
+14. Do not claim that a model has been trained until we actually train it.
+15. Do not fabricate evaluation metrics or project progress.
+16. Avoid data leakage in every module.
+17. Make the integration scientifically and statistically defensible.
+18. Keep the project manageable for a BTech college ML project while maintaining good engineering practices.
+
+---
+
+# 14. STARTING INSTRUCTION
+
+Begin by reviewing our current AgriLink project structure and the four existing datasets.
+
+Our current known dataset status:
+
+| Module | Dataset | Status |
+|---|---|---|
+| Farmer Intelligence | Crop-wise Area, Production and Yield | Selected; EDA and filtering underway |
+| Mandi Price Intelligence | Daily Commodity Prices India | Selected; 24.084 million records, 2021–2025 |
+| Store Demand Intelligence | Existing store-demand dataset | Already available |
+| Inventory Intelligence | Existing inventory/backorder dataset | Already available |
+
+Our next task is to finalize the Farmer Intelligence and Mandi Price Intelligence EDA and preprocessing, then design the cross-module integration dataset.
+
+Start with Phase 1: inspect the existing project files, notebooks and dataset paths. Do not rebuild completed work unnecessarily.
+
+Guide me like a technical mentor until AgriLink becomes a complete, working and demonstrable ML application.

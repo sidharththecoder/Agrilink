@@ -1,0 +1,103 @@
+{
+  "farmer": {
+    "rows": 402102,
+    "rows_excluding_total": 358800,
+    "year_min": "2001-2002",
+    "year_max": "2022-2023",
+    "states": 34,
+    "districts": 735,
+    "crops": 114,
+    "missing": {
+      "id": 0,
+      "year": 0,
+      "state_name": 0,
+      "state_code": 0,
+      "district_name": 0,
+      "district_code": 0,
+      "crop_name": 0,
+      "crop_code": 13,
+      "crop_type": 0,
+      "season": 0,
+      "area": 0,
+      "area_unit": 0,
+      "production": 4552,
+      "production_unit": 0,
+      "yield": 0,
+      "yield_unit": 0
+    }
+  },
+  "mandi": {
+    "monthly_groups": 427242,
+    "daily_records_represented": 64026496,
+    "year_min": 2001,
+    "year_max": 2023,
+    "states": 33,
+    "commodities": 336,
+    "missing": {
+      "State": 0,
+      "Commodity": 0,
+      "year": 0,
+      "month": 0,
+      "records": 0,
+      "Modal_Price": 0
+    }
+  },
+  "demand": {
+    "rows": 73100,
+    "date_min": "2022-01-01",
+    "date_max": "2024-01-01",
+    "stores": 5,
+    "products": 20,
+    "units_sold_mean": 136.46487004103966,
+    "missing": {
+      "Date": 0,
+      "Store ID": 0,
+      "Product ID": 0,
+      "Category": 0,
+      "Region": 0,
+      "Inventory Level": 0,
+      "Units Sold": 0,
+      "Units Ordered": 0,
+      "Demand Forecast": 0,
+      "Price": 0,
+      "Discount": 0,
+      "Weather Condition": 0,
+      "Holiday/Promotion": 0,
+      "Competitor Pricing": 0,
+      "Seasonality": 0
+    }
+  },
+  "inventory": {
+    "rows": 15243,
+    "backorder_counts": {
+      "0": 13430,
+      "1": 1813
+    },
+    "backorder_rate": 0.11893984123860132,
+    "missing": {
+      "sku": 0,
+      "national_inv": 0,
+      "lead_time": 832,
+      "in_transit_qty": 0,
+      "forecast_3_month": 0,
+      "forecast_6_month": 0,
+      "forecast_9_month": 0,
+      "sales_1_month": 0,
+      "sales_3_month": 0,
+      "sales_6_month": 0,
+      "sales_9_month": 0,
+      "min_bank": 0,
+      "potential_issue": 0,
+      "pieces_past_due": 0,
+      "perf_6_month_avg": 0,
+      "perf_12_month_avg": 0,
+      "local_bo_qty": 0,
+      "deck_risk": 0,
+      "oe_constraint": 0,
+      "ppap_risk": 0,
+      "stop_auto_buy": 0,
+      "rev_stop": 0,
+      "went_on_backorder": 0
+    }
+  }
+}

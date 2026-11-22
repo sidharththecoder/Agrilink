@@ -1,0 +1,32 @@
+{
+  "farmer_records_eligible": 358800,
+  "farmer_mandi_matched_records": 240581,
+  "match_rate": 0.670515607580825,
+  "matched_states": 32,
+  "matched_crop_categories": 62,
+  "agricultural_years": [
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "gross_value_column": "indicative_gross_value_inr"
+}

@@ -1,0 +1,22 @@
+AGRILINK - COMPLETE BUILD
+
+This archive contains the complete project, cleaned datasets, trained model artifacts, reports, source code, and updated Streamlit app/theme. No patch replacement or manual file merging is required.
+
+MAC SETUP
+1. Extract this ZIP. It creates a folder named AgriLink.
+2. Open that AgriLink folder in VS Code.
+3. In the VS Code terminal, run:
+
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   streamlit run app/Home.py
+
+4. Open http://localhost:8501
+
+Keep the terminal running while using the app. Stop with Control+C.
+
+NOTE
+- The cleaned datasets and trained model files are included. The large original daily mandi CSV archive is not required to run the app and is not included.
+- MySQL is optional; configure it using .env.example and database/schema.sql if needed.
+- Actual local app execution depends on successful installation of requirements on your Mac.

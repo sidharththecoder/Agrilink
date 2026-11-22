@@ -1,0 +1,19 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Secrets (never commit)
+.env
+config/database_config.py
+.streamlit/secrets.toml
+
+# macOS
+.DS_Store
+
+# Raw mandi CSVs are about 6.5 GB. Download them separately (see README).
+data/raw/mandi/*.csv
+
+data/raw/mandi/csv/
