@@ -45,8 +45,33 @@ def theme():
     </style>""", unsafe_allow_html=True)
 
 
+# Module links shown at the top of every page. Streamlit cannot reopen the sidebar from code,
+# so this row always lets you reach each module, even when the sidebar is collapsed.
+# Paths are relative to app/Home.py (the main script).
+MODULE_LINKS = [
+    ("Home", "Home.py", "🏠"),
+    ("Farmer", "pages/1_Farmer_Intelligence.py", "🌾"),
+    ("Mandi prices", "pages/2_Mandi_Price_Intelligence.py", "📈"),
+    ("Store demand", "pages/3_Store_Demand_Intelligence.py", "🛒"),
+    ("Inventory", "pages/4_Inventory_Intelligence.py", "📦"),
+    ("Integrated", "pages/5_Integrated_Intelligence.py", "🔗"),
+    ("Dashboard", "pages/7_AgriLink_Overall_Dashboard.py", "📊"),
+]
+
+
+def module_nav():
+    """A visible row of links to every module page."""
+    st.markdown("<div class='eyebrow'>MODULES</div>", unsafe_allow_html=True)
+    cols = st.columns(len(MODULE_LINKS))
+    for col, (label, path, icon) in zip(cols, MODULE_LINKS):
+        with col:
+            st.page_link(path, label=label, icon=icon)
+    st.divider()
+
+
 def page_header(title, subtitle):
     theme()
+    module_nav()
     st.markdown("<div class='eyebrow'>AGRILINK &nbsp;·&nbsp; FIELD TO MARKET</div>", unsafe_allow_html=True)
     st.title(title)
     st.markdown(f"<p style='color:#B8C9C0;margin-top:-.35rem'>{subtitle}</p>", unsafe_allow_html=True)

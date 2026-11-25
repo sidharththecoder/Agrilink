@@ -16,6 +16,8 @@ st.set_page_config(
     menu_items={},
 )
 theme()
+from app.components.ui import module_nav
+module_nav()
 
 # Homepage-only visual treatment: cinematic black with a deep green palette, inspired by
 # the supplied product video. The seven workspaces are presented as a long,
