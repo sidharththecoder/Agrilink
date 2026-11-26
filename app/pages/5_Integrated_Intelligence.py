@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from app.components.ui import page_header, load_csv, load_model, log_prediction, show_last_saved
+from app.components.ui import page_header, load_csv, load_model, log_prediction, show_last_saved, year_note
 from src.integration.farmer_mandi import CROP_ALIASES, STATE_ALIASES
 from src.prediction.predictor import (
     predict_farmer_production, forecast_next_mandi_price, indicative_gross_value,
@@ -65,7 +65,10 @@ def render_farmer_mandi():
     season = c4.selectbox("Season", seasons, key="integrated_season")
 
     c5, c6 = st.columns(2, gap="large")
-    year = c5.number_input("Agricultural year starting", 2001, 2022, 2022, key="integrated_year")
+    year = c5.number_input("Prediction year", min_value=1900, max_value=2100, value=2027, step=1, key="integrated_year")
+    note = year_note(int(year))
+    if note:
+        st.caption(note)
     area = c6.number_input("Cultivated area (hectares)", min_value=0.0, value=100.0,
                            step=10.0, key="integrated_area")
 

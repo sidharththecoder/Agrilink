@@ -13,8 +13,8 @@ QUINTALS_PER_TONNE = 10  # 1 tonne = 10 quintals
 
 
 def predict_farmer_production(model_bundle: dict, *, year_start: int, state_name: str,
-                              district_name: str, crop_name: str, season: str,
-                              area: float) -> float:
+                            district_name: str, crop_name: str, season: str,
+                            area: float) -> float:
     """Predicted production in tonnes for one state/district/crop/season/year/area."""
     X = pd.DataFrame([{
         "year_start": int(year_start), "state_name": state_name,

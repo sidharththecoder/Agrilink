@@ -1,0 +1,2 @@
+This folder is reserved for the 23 supplied yearly files: 2001.csv through 2023.csv.
+They are not bundled in this ZIP because the 23 raw CSV files total about 5.43 GiB and exceed the downloadable archive limit. Copy the original 2001.csv ... 2023.csv files into this folder before running preprocessing.

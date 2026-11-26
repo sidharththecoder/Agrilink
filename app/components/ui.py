@@ -126,3 +126,13 @@ def show_last_saved(module, title):
     outputs = ", ".join(f"{k.replace('_', ' ')}: {v:,.2f}" if isinstance(v, (int, float)) else f"{k}: {v}"
                         for k, v in record["outputs"].items())
     st.caption(f"Last saved {title} · {record['created_at']} · {outputs}")
+
+TRAIN_YEAR_MIN, TRAIN_YEAR_MAX = 2001, 2022
+
+
+def year_note(year):
+    """Caption shown when the prediction year is outside the years the model was trained on."""
+    if year < TRAIN_YEAR_MIN or year > TRAIN_YEAR_MAX:
+        return (f"Training data covers {TRAIN_YEAR_MIN}–{TRAIN_YEAR_MAX}. For {year}, the model uses the closest learned "
+                "pattern and does not forecast a trend, so treat the result as a baseline estimate.")
+    return None

@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 ROOT=Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
-from app.components.ui import page_header,load_csv,load_model,log_prediction,show_last_saved
+from app.components.ui import page_header,load_csv,load_model,log_prediction,show_last_saved,year_note
 page_header("Farmer Intelligence","Estimate crop production from local agricultural and cultivation signals")
 show_last_saved("farmer", "Farmer production")
 modelp=ROOT/"models/farmer/farmer.joblib"; datap=ROOT/"data/cleaned/farmer/crop_production_cleaned.csv"
@@ -30,7 +30,9 @@ c3,c4=st.columns(2,gap="large")
 crop=c3.selectbox("Crop",crops,key="farmer_crop")
 season=c4.selectbox("Season",seasons,key="farmer_season")
 c5,c6=st.columns(2,gap="large")
-year=c5.number_input("Agricultural year starting",2001,2022,2022,key="farmer_year")
+year=c5.number_input("Prediction year",min_value=1900,max_value=2100,value=2027,step=1,key="farmer_year")
+note=year_note(int(year))
+if note: st.caption(note)
 area=c6.number_input("Cultivated area (hectares)",min_value=0.0,value=100.0,step=10.0,key="farmer_area")
 if st.button("Estimate production",type="primary",key="farmer_predict"):
     X=pd.DataFrame([{"year_start":year,"state_name":state,"district_name":district,"crop_name":crop,"season":season,"area":area}])
